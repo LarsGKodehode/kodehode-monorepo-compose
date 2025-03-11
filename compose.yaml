@@ -1,0 +1,9 @@
+name: monorepo-compose
+
+services:
+  example-next-app:
+    build:
+      context: ./frontend/example-next-app
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
