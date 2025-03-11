@@ -20,8 +20,3 @@ services:
       - "traefik.http.routers.x-next.rule=Host(`x-next.localhost`)" # Specify (sub)domain
       - "traefik.http.routers.x-next.entrypoints=web" # Define type HTTP/HTTPS
       - "traefik.http.services.x-next.loadbalancer.server.port=3000" # Define Port
-    networks:
-      - internal
-
-networks:
-  internal:
