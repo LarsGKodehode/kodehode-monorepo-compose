@@ -1,0 +1,30 @@
+# it through port 9000.
+services:
+  minio:
+    container_name: object-storage
+    image: minio/minio:RELEASE.2025-02-28T09-55-16Z
+    command: server /data --console-address ":9001"
+    environment:
+      # Dev access credentials
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    hostname: minio1
+    volumes:
+      - data1:/data1
+      - data2:/data2
+    labels:
+      # Expose the dashboard to the localhost
+      - "traefik.enable=true" # Set the service as routable
+      - "traefik.http.routers.object-storage.rule=Host(`object-storage.localhost`)" # Specify (sub)domain
+      - "traefik.http.routers.object-storage.entrypoints=web" # Define type HTTP/HTTPS
+      - "traefik.http.services.object-storage.loadbalancer.server.port=9001" # Expose the Admin UI
+
+# Persist buckets locally
+volumes:
+  data1:
+  data2:

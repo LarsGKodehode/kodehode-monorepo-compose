@@ -1,7 +1,9 @@
 name: monorepo-compose
 
+# Platform provided services
 include:
   - platform/services/gateway.yaml
+  - platform/services/object-storage.yaml
 
 services:
   example-next-app:
