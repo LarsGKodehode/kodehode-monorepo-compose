@@ -1,0 +1,12 @@
+services:
+  nats:
+    image: nats:alpine
+    container_name: message-bus
+    restart: always
+    command: -c /etc/nats/nats.conf
+    volumes:
+      - ./message-bus.conf:/etc/nats/nats.conf
+      - messages:/data
+
+volumes:
+  messages:

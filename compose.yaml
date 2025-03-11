@@ -4,6 +4,9 @@ name: monorepo-compose
 include:
   - platform/services/gateway.yaml
   - platform/services/object-storage.yaml
+  - platform/services/message-bus.yaml
+
+# Service Ports
 
 services:
   example-next-app:
