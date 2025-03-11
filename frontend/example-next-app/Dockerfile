@@ -9,9 +9,9 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 RUN npm clean-install
 
-COPY src ./src
+COPY . .
 COPY public ./public
-COPY next.config.js .
+COPY next.config.ts .
 COPY tsconfig.json .
 
 # Environment variables must be present at build time
