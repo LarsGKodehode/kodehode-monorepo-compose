@@ -1,0 +1,27 @@
+services:
+  example-static-page:
+    # Documentation: https://static-web-server.net/
+    container_name: example-static-page
+    image: joseluisq/static-web-server:2
+    environment:
+      SERVER_FALLBACK_PAGE: /public/index.html # Redirect all 404 to home page
+    volumes:
+      - ./example-static-page:/public
+    labels:
+      # The following labels exposes this service to the internet
+      - "traefik.enable=true" # Set the service as routable
+      - "traefik.http.routers.x-static.rule=Host(`x-static.localhost`)" # Specify (sub)domain
+      - "traefik.http.routers.x-static.entrypoints=web" # Define type HTTP/HTTPS
+      - "traefik.http.services.x-static.loadbalancer.server.port=80" # Define Port
+
+  example-next-app:
+    container_name: example-next-app
+    build:
+      context: ./example-next-app
+      dockerfile: Dockerfile
+    labels:
+      # The following labels exposes this service to the internet
+      - "traefik.enable=true" # Set the service as routable
+      - "traefik.http.routers.x-next.rule=Host(`x-next.localhost`)" # Specify (sub)domain
+      - "traefik.http.routers.x-next.entrypoints=web" # Define type HTTP/HTTPS
+      - "traefik.http.services.x-next.loadbalancer.server.port=3000" # Define Port

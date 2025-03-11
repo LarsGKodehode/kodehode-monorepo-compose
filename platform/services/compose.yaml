@@ -1,0 +1,4 @@
+include:
+  - gateway.yaml
+  - object-storage.yaml
+  - message-bus.yaml

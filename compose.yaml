@@ -1,34 +1,13 @@
 name: monorepo-compose
 
-# Platform provided services
+# We are delegating all actual definition to the spefic folders
+# This is done mostly to allow, ie. Frontend to focus on Frontend
+# more than anything else. Caveat with doing it this way
+# is lack of a central oversight, and potential conflicts
+# with shared resources, mainly the gateway service
+# Ie. We have spread out which service is exposed on which (sub)domain
 include:
-  - platform/services/gateway.yaml
-  - platform/services/object-storage.yaml
-  - platform/services/message-bus.yaml
-
-# Service Ports
-
-services:
-  example-static-page:
-    container_name: example-static-page
-    image: joseluisq/static-web-server:2
-    volumes:
-      - ./frontend/example-static-page:/public
-    labels:
-      # The following labels exposes this service to the internet
-      - "traefik.enable=true" # Set the service as routable
-      - "traefik.http.routers.x-static.rule=Host(`x-static.localhost`)" # Specify (sub)domain
-      - "traefik.http.routers.x-static.entrypoints=web" # Define type HTTP/HTTPS
-      - "traefik.http.services.x-static.loadbalancer.server.port=80" # Define Port
-
-  example-next-app:
-    container_name: example-next-app
-    build:
-      context: ./frontend/example-next-app
-      dockerfile: Dockerfile
-    labels:
-      # The following labels exposes this service to the internet
-      - "traefik.enable=true" # Set the service as routable
-      - "traefik.http.routers.x-next.rule=Host(`x-next.localhost`)" # Specify (sub)domain
-      - "traefik.http.routers.x-next.entrypoints=web" # Define type HTTP/HTTPS
-      - "traefik.http.services.x-next.loadbalancer.server.port=3000" # Define Port
+  # Platform provided services
+  - platform/services/compose.yaml
+  # The User Interface composition
+  - frontend/compose.yaml
