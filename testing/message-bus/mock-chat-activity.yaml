@@ -1,0 +1,47 @@
+# Can be used to mock som activity in the chat subject
+#
+# Command:       bento run ./testing/message-bus/mock-chat-activity.yaml
+# Documentation: https://warpstreamlabs.github.io/bento/
+
+input:
+  label: chat
+  generate:
+    mapping: |
+      let avatars = [
+        "https://simpleicons.org/icons/minio.svg",
+        "https://simpleicons.org/icons/docker.svg",
+        "https://simpleicons.org/icons/natsdotio.svg",
+        "https://simpleicons.org/icons/nixos.svg",
+        "https://simpleicons.org/icons/nextdotjs.svg",
+        "https://simpleicons.org/icons/react.svg",
+        "https://simpleicons.org/icons/dotnet.svg",
+        "https://simpleicons.org/icons/traefikproxy.svg",
+        "https://simpleicons.org/icons/html5.svg",
+        "https://simpleicons.org/icons/css.svg",
+        "https://simpleicons.org/icons/javascript.svg",
+        "https://simpleicons.org/icons/typescript.svg",
+      ]
+
+      let alias = fake("first_name")
+      root.sender.id = uuid_v4()
+      root.sender.alias = $alias
+      root.sender.avatar = $avatars.index(random_int(max: 11))
+
+      root.timeStamp = now()
+
+      let chattyScore = random_int(max: 10)
+      root.content = match {
+        $chattyScore == 0 => fake("word")
+        $chattyScore <= 4 => fake("sentence")
+        $chattyScore <= 9 => fake("paragraph")
+        $chattyScore > 9 => fake("paragraph") + fake("paragraph")
+      }
+    interval: 500ms
+
+output:
+  label: "chat_publisher"
+  nats:
+    urls: [nats://localhost:4222]
+    headers:
+      Content-Type: application/json
+    subject: examples.chat

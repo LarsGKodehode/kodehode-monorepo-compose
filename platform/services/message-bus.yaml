@@ -7,6 +7,10 @@ services:
     volumes:
       - ./message-bus.conf:/etc/nats/nats.conf
       - messages:/data
+    # Sidestep the Proxy (Traefik) here, to avoid extra hops
+    ports:
+      - 4222:4222 # Expose the Message Bus NATS port to the local CLI
+      - 4223:4223 # Expose the Message Bus WebSocket port to client applications
 
 volumes:
   messages:

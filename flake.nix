@@ -35,6 +35,10 @@
             pkgs.nodejs_22
             ## Backend
             pkgs.dotnetCorePackages.sdk_9_0 
+
+            # Platform
+            pkgs.natscli # Message Bus CLI
+            pkgs.bento # Message Bus Stream Processor
           ];
 
           # Development Environment Variables

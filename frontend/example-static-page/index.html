@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Example Static Page</title>
+  <script type="module" src="main.js"></script>
+</head>
+
+<body class="bg-primary text-background">
+  <header class="shadow-lg py-sm">
+    <h1 class="text-center">Example Static Page</h1>
+  </header>
+
+  <main class="bg-default text-default flex flex-col items-center">
+    <ol data-message="chat-box" class="flex flex-col w-full h-full px-lg py-sm gap-sm overflow-y-auto">
+
+      <!-- A template for messages -->
+      <template data-message="message-template">
+        <!-- "self-end" for sent messages, "self-start" for recieved message -->
+        <li data-message="chat-card" class="flex max-w-lg self-start bg-secondary rounded-md px-sm py-sm shadow-md">
+          <!-- Sender Information -->
+          <header>
+            <div class="p-sm bg-text rounded-md flex justify-center items-center">
+              <img class="filter-invert" width="40px" data-message="avatar-src"
+                src="uri://avatars.store.monorepo.com/232-432-433.webp" alt="David's Avatar">
+            </div>
+            <p data-message="sender">David</p>
+          </header>
+
+          <!-- Message Content -->
+          <div>
+            <p class="px-md" data-message="content">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia fuga repudiandae, pariatur qui
+              necessitatibus, laboriosam impedit error unde accusamus delectus enim cum voluptatem iusto libero ex quis
+              quae
+              nulla illo.
+            </p>
+          </div>
+
+          <!-- Message Metadata -->
+          <footer>
+            <p data-message="time-stamp">2023-12-12 12:32:32</p>
+          </footer>
+        </li>
+      </template>
+
+    </ol>
+
+    <!-- Form for sending new messages -->
+    <form data-message="chat-form" class="flex justify-center items-center gap-sm py-sm w-full px-lg self-end">
+      <div class="flex flex-col w-full">
+        <label class="visually-hidden" for="message">Message</label>
+        <input class="px-md py-sm rounded-md" placeholder="Type here..." type="text" name="message" id="message">
+      </div>
+
+      <button class="p-sm rounded-md" type="submit">Send</button>
+      <button class="p-sm rounded-md" type="reset">Clear</button>
+    </form>
+  </main>
+
+  <footer class="py-sm">
+    <p class="text-center">Example corp. 2025&copy;</p>
+  </footer>
+</body>
+
+</html>

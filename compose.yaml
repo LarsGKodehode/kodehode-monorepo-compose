@@ -9,6 +9,18 @@ include:
 # Service Ports
 
 services:
+  example-static-page:
+    container_name: example-static-page
+    image: joseluisq/static-web-server:2
+    volumes:
+      - ./frontend/example-static-page:/public
+    labels:
+      # The following labels exposes this service to the internet
+      - "traefik.enable=true" # Set the service as routable
+      - "traefik.http.routers.x-static.rule=Host(`x-static.localhost`)" # Specify (sub)domain
+      - "traefik.http.routers.x-static.entrypoints=web" # Define type HTTP/HTTPS
+      - "traefik.http.services.x-static.loadbalancer.server.port=80" # Define Port
+
   example-next-app:
     container_name: example-next-app
     build:
