@@ -1,9 +1,22 @@
 name: monorepo-compose
 
+include:
+  - platform/services/gateway.yaml
+
 services:
   example-next-app:
+    container_name: example-next-app
     build:
       context: ./frontend/example-next-app
       dockerfile: Dockerfile
-    ports:
-      - 3000:3000
+    labels:
+      # The following labels exposes this service to the internet
+      - "traefik.enable=true" # Set the service as routable
+      - "traefik.http.routers.x-next.rule=Host(`x-next.localhost`)" # Specify (sub)domain
+      - "traefik.http.routers.x-next.entrypoints=web" # Define type HTTP/HTTPS
+      - "traefik.http.services.x-next.loadbalancer.server.port=3000" # Define Port
+    networks:
+      - internal
+
+networks:
+  internal:
