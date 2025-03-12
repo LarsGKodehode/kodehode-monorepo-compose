@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -27,7 +28,28 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen grid grid-rows-[1fr_minmax(0,auto)] bg-gradient-to-br from-amber-500 to-orange-600 relative">
+          <header className="absolute top-0 flex items-center justify-between w-full px-2 py-1 shadow-2xl bg-slate-900/20 backdrop-blur-lg">
+            <Link href="/" className="hover:scale-105">
+              <img width={40} src="https://simpleicons.org/icons/files.svg" alt="Example Logo" />
+            </Link>
+
+            <nav>
+              <ul className="flex gap-2">
+                <li className="hover:scale-105"><Link href="/files">Files</Link></li>
+                <li className="hover:scale-105"><Link href="/upload">Upload</Link></li>
+              </ul>
+            </nav>
+          </header>
+
+          <div className="h-full">
+            {children}
+          </div>
+
+          <footer>
+            <p className="text-center">Goody Two Shoes Inc&trade; 2025&copy;</p>
+          </footer>
+        </div>
       </body>
     </html>
   );
