@@ -1,4 +1,4 @@
 include:
-  - gateway.yaml
-  - object-storage.yaml
-  - message-bus.yaml
+  - ./gateway/gateway.yaml
+  - ./object-storage/object-storage.yaml
+  - ./message-bus/message-bus.yaml
